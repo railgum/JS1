@@ -29,7 +29,7 @@
     <script>
       "use strict";
 
-      const userNumber = prompt("Введите положительное целое число");
+      const userNumber = +prompt("Введите положительное целое число");
 
       const number = Math.trunc(userNumber % 1000);
       const hundreds = Math.trunc(number / 100);
