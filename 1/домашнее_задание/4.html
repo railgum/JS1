@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Homework</title>
-</head>
-<body>
-<!--
+  <head>
+    <meta charset="UTF-8" />
+    <title>Homework</title>
+  </head>
+
+  <body>
+    <!--
 Необязательное задание.
 
 Необходимо от пользователя получить число.
@@ -25,10 +26,19 @@
 
 Уточнение: пользователь всегда вводит корректное положительное целое число.
 -->
-<script>
-  "use strict";
+    <script>
+      "use strict";
 
-  // Здесь пишем решение, данный комментарий необходимо стереть.
-</script>
-</body>
+      const userNumber = prompt("Введите положительное целое число");
+
+      const number = Math.trunc(userNumber % 1000);
+      const hundreds = Math.trunc(number / 100);
+      const dozens = Math.trunc((number - hundreds * 100) / 10);
+      const units = number - hundreds * 100 - dozens * 10;
+
+      alert(
+        `В числе ${userNumber} количество сотен: ${hundreds}, десятков: ${dozens}, единиц: ${units}`
+      ); // так форматирует Prettier ))
+    </script>
+  </body>
 </html>
