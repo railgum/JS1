@@ -78,6 +78,36 @@ Infinity делать не нужно, однако, в случае если б
       function div(num1, num2) {
         return num1 / num2;
       }
+
+      /**
+       * Функция простой калькулятор двух чисел.
+       * @param {number} arg1 Первое число.
+       * @param {number} arg2 Второе число.
+       * @param {string} operation Строка, содержащая символ операции в виде:
+       * "+", "-", "*", "/".
+       * @returns {number} Результат деления двух чисел. NaN, если символ
+       * операции некорректен.
+       */
+      function mathOperation(arg1, arg2, operation) {
+        switch (operation) {
+          case "+":
+            return sum(arg1, arg2);
+          case "-":
+            return sub(arg1, arg2);
+          case "*":
+            return mult(arg1, arg2);
+          case "/":
+            return div(arg1, arg2);
+          default:
+            return NaN;
+        }
+      }
+
+      console.log(mathOperation(20, 10, "+"));
+      console.log(mathOperation(20, 10, "-"));
+      console.log(mathOperation(20, 10, "*"));
+      console.log(mathOperation(20, 10, "/"));
+      console.log(mathOperation(20, 10, "%"));
     </script>
   </body>
 </html>
