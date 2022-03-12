@@ -64,7 +64,7 @@
            <a href="#">link</a>
           */
       const dropdown = document.querySelector("div.dropdown");
-      dropdown.insertAdjacentHTML("afterend", "<a href='#''>link</a>");
+      dropdown.insertAdjacentHTML("afterend", "<a href='#'>link</a>");
       console.log(dropdown);
       /*
          5. У элемента с id "dropdownMenuButton" замените id на "superDropdown".
@@ -96,7 +96,7 @@
          Атрибут "class" содержит значение "btn btn-secondary dropdown-toggle"
           */
       const doubleClass = document.querySelector(
-        ".btn" && ".dropdown-toggle"
+        ".btn.dropdown-toggle"
       ).attributes;
       for (let attr of doubleClass) {
         console.log(
