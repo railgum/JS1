@@ -22,29 +22,31 @@
 
       // ES5--------------
       function ProductES5(productName, productPrice) {
-        this.productName = productName;
-        this.productPrice = productPrice;
+        this.name = productName;
+        this.price = productPrice;
       }
       ProductES5.prototype.make25Discount = function () {
-        return (this.productPrice *= 0.75);
+        this.price *= 0.75;
       };
       let product1 = new ProductES5("matryoshka", 500);
-      console.log(product1.productName);
-      console.log(product1.make25Discount());
+      console.log(product1.name);
+      product1.make25Discount();
+      console.log("После скидки цена составила: " + product1.price + "$");
 
       // ES6--------------
       class ProductES6 {
         constructor(productName, productPrice) {
-          this.productName = productName;
-          this.productPrice = productPrice;
+          this.name = productName;
+          this.price = productPrice;
         }
         make25Discount() {
-          return (this.productPrice *= 0.75);
+          this.price *= 0.75;
         }
       }
       let product2 = new ProductES6("tulip", 300);
-      console.log(product2.productName);
-      console.log(product2.make25Discount());
+      console.log(product2.name);
+      product2.make25Discount();
+      console.log("После скидки цена составила: " + product2.price + "$");
     </script>
   </body>
 </html>
