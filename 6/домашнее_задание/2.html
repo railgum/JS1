@@ -96,10 +96,7 @@
          Если поле было чем-либо заполнено, подсветку (класс error) необходимо убрать.
           */
       const form = document.querySelector("form");
-      const sendBtn = form.querySelector("button");
-      //const formInput = form.querySelector("input");
-      //const formSelect = form.querySelector("select");
-      const formControl = document.querySelectorAll(".form-control");
+      const formControl = form.querySelectorAll(".form-control");
       form.addEventListener("submit", (event) => {
         event.preventDefault();
         let errors = form.querySelectorAll(".error");
