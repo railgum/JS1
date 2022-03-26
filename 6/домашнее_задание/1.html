@@ -1,76 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Homework</title>
-  <style>
-    .product {
-      width: 200px;
-      padding: 10px;
-      float: left;
-      margin-right: 30px;
-      box-shadow: 0 0 4px black;
-    }
-  </style>
-</head>
-<body>
-<!--
+  <head>
+    <meta charset="UTF-8" />
+    <title>Homework</title>
+    <style>
+      .product {
+        width: 200px;
+        padding: 10px;
+        float: left;
+        margin-right: 30px;
+        box-shadow: 0 0 4px black;
+      }
+    </style>
+  </head>
+  <body>
+    <!--
 Обязательное задание.
 
 Выполнить все задачи в теге script. Комментарии, в которых написаны задачи, не
 стирать, код с решением задачи пишем под комментарием.
 -->
-<div class="product">
-  <div class="productName">Товар 1</div>
-  <img src="https://picsum.photos/id/367/200/300" alt="">
-  <button>В корзину</button>
-</div>
-<div class="product">
-  <div class="productName">Товар 2</div>
-  <img src="https://picsum.photos/id/425/200/300" alt="">
-  <button>В корзину</button>
-</div>
-<div class="product">
-  <div class="productName">Товар 3</div>
-  <img src="https://picsum.photos/id/429/200/300" alt="">
-  <button>В корзину</button>
-</div>
+    <div class="product">
+      <div class="productName">Товар 1</div>
+      <img src="https://picsum.photos/id/367/200/300" alt="" />
+      <button>В корзину</button>
+    </div>
+    <div class="product">
+      <div class="productName">Товар 2</div>
+      <img src="https://picsum.photos/id/425/200/300" alt="" />
+      <button>В корзину</button>
+    </div>
+    <div class="product">
+      <div class="productName">Товар 3</div>
+      <img src="https://picsum.photos/id/429/200/300" alt="" />
+      <button>В корзину</button>
+    </div>
 
-<script>
-  "use strict";
+    <script>
+      "use strict";
 
-  /*
-  1. Установите всем элементам с классом "productName" размер шрифта 24px.
-   */
+      /*
+      	1. Установите всем элементам с классом "productName" размер шрифта 24px.
+        */
+      document
+        .querySelectorAll(".productName")
+        .forEach((elem) => (elem.style.fontSize = "24px"));
 
+      /*
+        2. Установите всем элементам с классом "product" внешний отступ справа 50px.
+       */
+      const productElem = document.querySelectorAll(".product");
+      for (let elem of productElem) {
+        elem.style.marginRight = "50px";
+      }
+      /*
+        3. При клике на кнопку "В корзину" название кнопки должно поменяться на
+        "Добавлено" и кнопка должна стать неактивной.
+        */
+      //const btn = document.querySelectorAll("button");
+      //btn.forEach((item) => {
+      //  item.addEventListener("click", (event) => {
+      //    event.target.textContent = "Добавлено";
+      //    event.target.disabled = true;
+      //  });
+      //});
+      document.body.addEventListener("click", (event) => {
+        if (event.target.tagName === "BUTTON") {
+          event.target.textContent = "Добавлено";
+          event.target.disabled = true;
+        }
+      });
 
-  /*
-  2. Установите всем элементам с классом "product" внешний отступ справа 50px.
-   */
-
-
-  /*
-  3. При клике на кнопку "В корзину" название кнопки должно поменяться на
-  "Добавлено" и кнопка должна стать неактивной.
-   */
-
-
-  /*
-  4. Создайте полную (глубокую) копию элемента с классом product, измените в
-  этой копии путь до картинки на:
-  https://picsum.photos/id/1080/200/300
-  Поставьте название товара в данной копии "Товар 4" и замените последний
-  отображенный товар на странице на созданную копию. У данной копии также
-  должен правильно работать код из 3-го задания.
-   */
-
-
-  /*
-  5. По истечению 2 секунд с момента открытия страницы первый товар должен быть
-  удален из html.
-   */
-
-
-</script>
-</body>
+      /*
+        4. Создайте полную (глубокую) копию элемента с классом product, измените в
+        этой копии путь до картинки на:
+        https://picsum.photos/id/1080/200/300
+        Поставьте название товара в данной копии "Товар 4" и замените последний
+        отображенный товар на странице на созданную копию. У данной копии также
+        должен правильно работать код из 3-го задания.
+        */
+      const product = document.querySelector(".product");
+      const productClone = product.cloneNode(true);
+      productClone
+        .querySelector("img")
+        .setAttribute("src", "https://picsum.photos/id/1080/200/300");
+      productClone.querySelector(".productName").textContent = "Товар 4";
+      productElem[productElem.length - 1].replaceWith(productClone);
+      /*
+        5. По истечению 2 секунд с момента открытия страницы первый товар должен быть
+        удален из html.
+        */
+      window.addEventListener("load", () => {
+        setTimeout(() => product.remove(), 2000);
+      });
+    </script>
+  </body>
 </html>
