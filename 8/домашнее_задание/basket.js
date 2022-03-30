@@ -10,15 +10,18 @@ cartIcon.addEventListener("click", () => {
   basketWrap.classList.toggle("hidden");
 });
 
+//Счетчик товаров
+let countTotalMerch = 0;
+
 //Обработка события нажатия на значок добавления в корзину
 document.querySelector(".featuredItems").addEventListener("click", (event) => {
   if (!event.target.classList.contains("addToBasket")) {
     return;
   }
-  console.log(event.target);
-  addToCart();
+  countTotalMerch++;
+  countMerch.textContent = countTotalMerch;
+  addToCart(event.target);
   addMerch();
-  //console.log(event.currentTarget);
 });
 
 //Функция проверки наличия товаров в корзине
@@ -28,5 +31,32 @@ function addMerch() {
   }
 }
 
+//Класс продукта
+class Product {
+  constructor(id, name, price) {
+    this.id = id;
+    this.name = name;
+    this.price = price;
+    this.count = 0;
+  }
+}
+
 //Функция добавления товара в объект basket
-function addToCart() {}
+function addToCart(merch) {
+  const id = merch.closest(".featuredItem").dataset.id;
+  const name = merch.closest(".featuredItem").dataset.name;
+  const price = merch.closest(".featuredItem").dataset.price;
+
+  //Отдельная функция?
+  if (
+    (Object.keys(basket).length === 0 && basket.constructor === Object) ||
+    basket[id] === undefined
+  ) {
+    basket[id] = new Product(id, name, price);
+  }
+  if (basket[id]["id"] === id) {
+    basket[id]["count"]++;
+  }
+  console.log(Object.entries(basket));
+  getProductMarkup();
+}
