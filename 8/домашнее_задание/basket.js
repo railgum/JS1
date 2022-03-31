@@ -4,10 +4,10 @@ const basket = {};
 const basketWrap = document.querySelector(".basket");
 const countMerch = document.querySelector(".cartIconWrap > span");
 const basketContent = document.querySelector(".basketContent");
+const basketAmount = document.querySelector(".basketTotalValue");
 
 //Обрабока события клика на значок корзины
-const cartIcon = document.querySelector(".cartIcon");
-cartIcon.addEventListener("click", () => {
+document.querySelector(".cartIcon").addEventListener("click", () => {
   basketWrap.classList.toggle("hidden");
 });
 
@@ -25,7 +25,7 @@ document.querySelector(".featuredItems").addEventListener("click", (event) => {
   addMerch();
 });
 
-//Функция проверки наличия товаров в корзине
+//Функция проверки наличия товаров в корзине для значка в меню
 function addMerch() {
   if (!(countMerch.textContent === 0 || countMerch.textContent === "")) {
     countMerch.classList.remove("hidden");
@@ -44,7 +44,7 @@ class Product {
     return `
 		<div class="product">
 			<div>${this.name}</div>
-			<div>${this.count} pc</div>
+			<div>${this.count} pc.</div>
 			<div>$${this.price}</div>
 			<div>$${this.count * this.price}</div>
 		</div>
@@ -52,25 +52,35 @@ class Product {
   }
 }
 
-//Функция добавления товара в объект basket
+//Функция добавления товара и вывода корзины
 function addToCart(merch) {
   const id = merch.closest(".featuredItem").dataset.id;
   const name = merch.closest(".featuredItem").dataset.name;
   const price = merch.closest(".featuredItem").dataset.price;
 
   //Отдельная функция?
+  //Проверка на пустоту корзины и добавление нового продукта
   if (
     (Object.keys(basket).length === 0 && basket.constructor === Object) ||
     basket[id] === undefined
   ) {
     basket[id] = new Product(id, name, price);
   }
+  //Добавление счетчика при повторном нажатии продукта
   if (basket[id]["id"] === id) {
     basket[id]["count"]++;
   }
-
+  //Вывод козины
   const basketArray = Object.values(basket);
   basketContent.innerHTML = Array.from(basketArray, (product) =>
     product.getProductMarkup()
   ).join("");
+  //Подсчет общей суммы покупок
+  function basketSum(sum = 0) {
+    for (const key in basket) {
+      sum += basket[key]["count"] * basket[key]["price"];
+    }
+    return sum;
+  }
+  basketAmount.textContent = "$" + basketSum();
 }
