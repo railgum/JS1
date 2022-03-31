@@ -3,6 +3,7 @@
 const basket = {};
 const basketWrap = document.querySelector(".basket");
 const countMerch = document.querySelector(".cartIconWrap > span");
+const basketContent = document.querySelector(".basketContent");
 
 //Обрабока события клика на значок корзины
 const cartIcon = document.querySelector(".cartIcon");
@@ -39,6 +40,16 @@ class Product {
     this.price = price;
     this.count = 0;
   }
+  getProductMarkup() {
+    return `
+		<div class="product">
+			<div>${this.name}</div>
+			<div>${this.count} pc</div>
+			<div>$${this.price}</div>
+			<div>$${this.count * this.price}</div>
+		</div>
+		`;
+  }
 }
 
 //Функция добавления товара в объект basket
@@ -57,6 +68,9 @@ function addToCart(merch) {
   if (basket[id]["id"] === id) {
     basket[id]["count"]++;
   }
-  console.log(Object.entries(basket));
-  getProductMarkup();
+
+  const basketArray = Object.values(basket);
+  basketContent.innerHTML = Array.from(basketArray, (product) =>
+    product.getProductMarkup()
+  ).join("");
 }
