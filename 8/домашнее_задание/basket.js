@@ -70,11 +70,13 @@ function addToCart(merch) {
   if (basket[id]["id"] === id) {
     basket[id]["count"]++;
   }
-  //Вывод козины
+
+  //Вывод корзины
   const basketArray = Object.values(basket);
   basketContent.innerHTML = Array.from(basketArray, (product) =>
     product.getProductMarkup()
   ).join("");
+
   //Подсчет общей суммы покупок
   function basketSum(sum = 0) {
     for (const key in basket) {
