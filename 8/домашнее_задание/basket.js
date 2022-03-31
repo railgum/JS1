@@ -47,6 +47,7 @@ class Product {
 			<div>${this.count} pc.</div>
 			<div>$${this.price}</div>
 			<div>$${this.count * this.price}</div>
+			<div><i class="fa fa-shopping-basket" aria-hidden="true"></i></div>
 		</div>
 		`;
   }
