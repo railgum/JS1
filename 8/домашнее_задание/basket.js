@@ -5,31 +5,64 @@ const basketWrap = document.querySelector(".basket");
 const countMerch = document.querySelector(".cartIconWrap > span");
 const basketContent = document.querySelector(".basketContent");
 const basketAmount = document.querySelector(".basketTotalValue");
+const basketProductDelete = document.querySelector(".product i");
+
+//Счетчик товаров
+let countTotalMerch = 0;
 
 //Обрабока события клика на значок корзины
 document.querySelector(".cartIcon").addEventListener("click", () => {
   basketWrap.classList.toggle("hidden");
 });
 
-//Счетчик товаров
-let countTotalMerch = 0;
-
-//Обработка события нажатия на значок добавления в корзину
+//Обработка события добавления товара в корзину
 document.querySelector(".featuredItems").addEventListener("click", (event) => {
   if (!event.target.classList.contains("addToBasket")) {
     return;
   }
   countTotalMerch++;
   countMerch.textContent = countTotalMerch;
-  addToCart(event.target);
+
   addMerch();
+  addToCart(event.target);
+
+  //Удаление товара
+  document.addEventListener("click", (event) => {
+    if (!event.target.classList.contains("fa-shopping-basket")) {
+      return;
+    }
+    countTotalMerch -= event.target.dataset.count;
+
+    //addMerch();
+    //Удаление значка количества товаров.
+    //При вызове функции addMerch почему-то не удаляется!?
+    if (countTotalMerch === 0) {
+      countMerch.classList.add("hidden");
+    }
+    event.target.closest(".product").remove();
+    delete basket[event.target.dataset.id];
+    basketSum();
+
+    countMerch.textContent = countTotalMerch;
+    event.stopImmediatePropagation();
+  });
+  basketSum();
 });
 
 //Функция проверки наличия товаров в корзине для значка в меню
 function addMerch() {
-  if (!(countMerch.textContent === 0 || countMerch.textContent === "")) {
+  if (countMerch.innerText === 0 || countMerch.innerText === "") {
+    countMerch.classList.add("hidden");
+  } else {
     countMerch.classList.remove("hidden");
   }
+}
+//Подсчет общей суммы покупок
+function basketSum(sum = 0) {
+  for (const key in basket) {
+    sum += basket[key]["count"] * basket[key]["price"];
+  }
+  return (basketAmount.textContent = "$" + sum);
 }
 
 //Класс продукта
@@ -47,7 +80,9 @@ class Product {
 			<div>${this.count} pc.</div>
 			<div>$${this.price}</div>
 			<div>$${this.count * this.price}</div>
-			<div><i class="fa fa-shopping-basket" aria-hidden="true"></i></div>
+			<div><i class="fa fa-shopping-basket" aria-hidden="true" data-id=${
+        this.id
+      } data-count=${this.count}></i></div>
 		</div>
 		`;
   }
@@ -77,13 +112,4 @@ function addToCart(merch) {
   basketContent.innerHTML = Array.from(basketArray, (product) =>
     product.getProductMarkup()
   ).join("");
-
-  //Подсчет общей суммы покупок
-  function basketSum(sum = 0) {
-    for (const key in basket) {
-      sum += basket[key]["count"] * basket[key]["price"];
-    }
-    return sum;
-  }
-  basketAmount.textContent = "$" + basketSum();
 }
