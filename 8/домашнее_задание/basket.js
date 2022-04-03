@@ -17,41 +17,39 @@ document.querySelector(".cartIcon").addEventListener("click", () => {
 
 //Обработка события добавления товара в корзину
 document.querySelector(".featuredItems").addEventListener("click", (event) => {
-  if (!event.target.classList.contains("addToBasket")) {
+  if (!event.target.closest(".addToBasket")) {
     return;
   }
   countTotalMerch++;
   countMerch.textContent = countTotalMerch;
-
-  addMerch();
   addToCart(event.target);
-
-  //Удаление товара
-  document.addEventListener("click", (event) => {
-    if (!event.target.classList.contains("fa-shopping-basket")) {
-      return;
-    }
-    countTotalMerch -= event.target.dataset.count;
-
-    //addMerch();
-    //Удаление значка количества товаров.
-    //При вызове функции addMerch почему-то не удаляется!?
-    if (countTotalMerch === 0) {
-      countMerch.classList.add("hidden");
-    }
-    event.target.closest(".product").remove();
-    delete basket[event.target.dataset.id];
-    basketSum();
-
-    countMerch.textContent = countTotalMerch;
-    event.stopImmediatePropagation();
-  });
   basketSum();
+});
+//Удаление товара
+document.addEventListener("click", (event) => {
+  if (!event.target.classList.contains("fa-shopping-basket")) {
+    return;
+  }
+  countTotalMerch -= event.target.dataset.count;
+
+  //addMerch();
+  //Удаление значка количества товаров.
+  //При вызове функции addMerch почему-то не удаляется!?
+  if (countTotalMerch === 0) {
+    countMerch.classList.add("hidden");
+  }
+  event.target.closest(".product").remove();
+  delete basket[event.target.dataset.id];
+  basketSum();
+
+  countMerch.textContent = countTotalMerch;
+  //event.stopImmediatePropagation();
 });
 
 //Функция проверки наличия товаров в корзине для значка в меню
 function addMerch() {
-  if (countMerch.innerText === 0 || countMerch.innerText === "") {
+  //if (countMerch.innerText === 0 || countMerch.innerText === "")
+  if (Object.keys(basket).length === 0 && basket.constructor === Object) {
     countMerch.classList.add("hidden");
   } else {
     countMerch.classList.remove("hidden");
@@ -106,6 +104,7 @@ function addToCart(merch) {
   if (basket[id]["id"] === id) {
     basket[id]["count"]++;
   }
+  addMerch();
 
   //Вывод корзины
   const basketArray = Object.values(basket);
