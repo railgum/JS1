@@ -32,9 +32,7 @@ document.addEventListener("click", (event) => {
   }
   countTotalMerch -= event.target.dataset.count;
 
-  //addMerch();
   //Удаление значка количества товаров.
-  //При вызове функции addMerch почему-то не удаляется!?
   if (countTotalMerch === 0) {
     countMerch.classList.add("hidden");
   }
@@ -43,7 +41,6 @@ document.addEventListener("click", (event) => {
   basketSum();
 
   countMerch.textContent = countTotalMerch;
-  //event.stopImmediatePropagation();
 });
 
 //Функция проверки наличия товаров в корзине для значка в меню
